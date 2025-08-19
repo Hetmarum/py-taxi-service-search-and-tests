@@ -3,6 +3,7 @@ from django.urls import reverse
 
 from taxi.models import Manufacturer, Driver, Car
 
+
 class SearchFormTests(TestCase):
     def setUp(self):
         self.user1 = Driver.objects.create_user(
