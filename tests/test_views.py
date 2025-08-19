@@ -19,11 +19,17 @@ class ToggleAssignToCarViewTest(TestCase):
         self.client.login(username="test", password="test123")
 
     def test_toggle_assign_adds_car(self):
-        response = self.client.get(reverse(
-            "taxi:toggle-car-assign", args=[self.car.id])
+        response = self.client.get(
+            reverse("taxi:toggle-car-assign", args=[self.car.id])
         )
         self.assertIn(self.car, self.driver.cars.all())
-        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(
+            response,
+            reverse(
+                "taxi:car-detail",
+                args=[self.car.id]
+            )
+        )
 
     def test_toggle_assign_removes_car(self):
         self.driver.cars.add(self.car)
@@ -31,7 +37,13 @@ class ToggleAssignToCarViewTest(TestCase):
             reverse("taxi:toggle-car-assign", args=[self.car.id])
         )
         self.assertNotIn(self.car, self.driver.cars.all())
-        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(
+            response,
+            reverse(
+                "taxi:car-detail",
+                args=[self.car.id]
+            )
+        )
 
     def test_toggle_assign_multiple_times(self):
         self.client.get(reverse("taxi:toggle-car-assign", args=[self.car.id]))

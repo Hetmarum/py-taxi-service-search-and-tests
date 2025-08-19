@@ -12,7 +12,7 @@ class ModelTests(TestCase):
         )
         self.assertEqual(str(manufacturer), "Toyota Japan")
 
-    def test_create_licence_number(self):
+    def test_driver_model_creation(self):
         username = "test"
         first_name = "test first name"
         last_name = "test last name"
